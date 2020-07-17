@@ -1,0 +1,8 @@
+config:
+  namespace:
+    temporary: true
+pre:
+- name: integrations
+  run: |
+    kamel install -w -n ${YAKS_NAMESPACE}
+    kamel run ../SalesforceToWorkday.java -n ${YAKS_NAMESPACE}
