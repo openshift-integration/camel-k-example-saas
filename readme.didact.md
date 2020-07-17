@@ -133,9 +133,9 @@ We're ready to run the integration on our `camel-saas` project in the cluster.
 Use the following command to run it in "dev mode", in order to see the logs in the integration terminal:
 
 ```
-kamel run SalesforceToWorkday.java --secret secret-saas -d camel-jetty -d mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2 --dev
+kamel run SalesforceToWorkday.java --secret secret-saas --source customizers/WSSecurityCustomizer.java -d camel-jetty -d mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2 --dev
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20SalesforceToWorkday.java%20--dev%20--secret%20secret-saas%20-d%20camel-jetty%20-d%20mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2%20--dev&completion=Camel%20K%20saas%20integration%20run%20in%20dev%20mode. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20SalesforceToWorkday.java%20--source%20customizers/WSSecurityCustomizer.java%20--secret%20secret-saas%20-d%20camel-jetty%20-d%20mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2%20--dev&completion=Camel%20K%20saas%20integration%20run%20in%20dev%20mode. "Opens a new terminal and sends the command above"){.didact})
 
 If everything is ok, after the build phase finishes, you should see the Camel integration running. When a new Salesforce Account is created, the integration will print "New Account <salesforce-id>" in the terminal window. After creating a Workday Customer Request it will print "Created Customer with id <workday-customer-id>". It will then update the Salesforce Account and print "Updated Account with Customer id <workday-customer-id>". 
 
@@ -154,9 +154,9 @@ or hit `ctrl+c` on the terminal window.
 To keep the integration running and not linked to the terminal, you can run it without "dev mode", just run:
 
 ```
-kamel run SalesforceToWorkday.java --secret secret-saas -d camel-jetty -d mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2
+kamel run SalesforceToWorkday.java --secret secret-saas --source customizers/WSSecurityCustomizer.java -d camel-jetty -d mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20SalesforceToWorkday.java%20--secret%20secret-saas%20-d%20camel-jetty%20-d%20mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2&completion=Camel%20K%20saas%20integration%20run. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20SalesforceToWorkday.java%20--secret%20secret-saas%20--source$20customizers/WSSecurityCustomizer.java%20-d%20camel-jetty%20-d%20mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2&completion=Camel%20K%20saas%20integration%20run. "Opens a new terminal and sends the command above"){.didact})
 
 
 
