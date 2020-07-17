@@ -106,7 +106,17 @@ When Camel K is installed, you should find an entry related to `red-hat-camel-k-
 
 You can now proceed to the next section.
 
-## 2. Running SaaS integration
+### 2. Creating a Kubernetes Secret from Salesforce and Workday credentials
+
+This repository contains a simple [secret-saas.properties](didact://?commandId=vscode.openFolder&projectFilePath=secret-saas.properties&completion=Opened%20the%secret-saas.properties%20file "Opens the secret-saas.properties file"){.didact} that can be used to generate a Kubernetes Secret with the Salesforce and Workday credentials by providing values for the properties in the file. 
+
+```
+kubectl create secret generic secret-saas --from-file=secret-saas.properties
+```
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kubectl%20create%20secret%20generic%20secret-saas%20--from-file%3Dsecret-saas.properties&completion=secret%20%22secret-saas%22%20created. "Create a secret with Salesforce and Workday credentials"){.didact})
+
+
+## 3. Running SaaS integration
 
 This repository contains a Camel K integration that subscribes to new Salesforce Account creation notifications and maps the event data to submit a new Customer request in Workday. It also adds the new Workday Customer `ID` as the `Account Number` field in the Salesforce Account. 
 
@@ -123,9 +133,9 @@ We're ready to run the integration on our `camel-saas` project in the cluster.
 Use the following command to run it in "dev mode", in order to see the logs in the integration terminal:
 
 ```
-kamel run SalesforceToWorkday.java --property-file integration.properties -d camel-jetty -d mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2 --dev
+kamel run SalesforceToWorkday.java --secret secret-saas -d camel-jetty -d mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2 --dev
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20SalesforceToWorkday.java%20--dev%20--property-file%20integration.properties%20-d%20camel-jetty%20-d%20mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2%20--dev&completion=Camel%20K%20saas%20integration%20run%20in%20dev%20mode. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20SalesforceToWorkday.java%20--dev%20--secret%20secret-saas%20-d%20camel-jetty%20-d%20mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2%20--dev&completion=Camel%20K%20saas%20integration%20run%20in%20dev%20mode. "Opens a new terminal and sends the command above"){.didact})
 
 If everything is ok, after the build phase finishes, you should see the Camel integration running. When a new Salesforce Account is created, the integration will print "New Account <salesforce-id>" in the terminal window. After creating a Workday Customer Request it will print "Created Customer with id <workday-customer-id>". It will then update the Salesforce Account and print "Updated Account with Customer id <workday-customer-id>". 
 
@@ -144,9 +154,9 @@ or hit `ctrl+c` on the terminal window.
 To keep the integration running and not linked to the terminal, you can run it without "dev mode", just run:
 
 ```
-kamel run SalesforceToWorkday.java --property-file integration.properties -d camel-jetty -d mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2
+kamel run SalesforceToWorkday.java --secret secret-saas -d camel-jetty -d mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001 -d mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2
 ```
-([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20SalesforceToWorkday.java%20--property-file%20integration.properties%20-d%20camel-jetty%20-d%20mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2&completion=Camel%20K%20saas%20integration%20run. "Opens a new terminal and sends the command above"){.didact})
+([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20SalesforceToWorkday.java%20--secret%20secret-saas%20-d%20camel-jetty%20-d%20mvn:org.apache.cxf:cxf-rt-transports-http-jetty:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001%20-d%20mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2&completion=Camel%20K%20saas%20integration%20run. "Opens a new terminal and sends the command above"){.didact})
 
 
 
@@ -179,7 +189,7 @@ or hit `ctrl+c` on the terminal window.
 
 > **Note:** Your IDE may provide an "Apache Camel K Integrations" panel where you can see the list of running integrations and also open a window to display the logs.
 
-## 3. Uninstall
+## 4. Uninstall
 
 To cleanup everything, execute the following command:
 

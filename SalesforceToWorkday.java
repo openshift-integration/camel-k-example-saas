@@ -1,3 +1,4 @@
+// camel-k: dependency=camel:jetty
 // camel-k: language=java
 
 import java.util.ArrayList;
