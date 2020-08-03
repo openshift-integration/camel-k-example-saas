@@ -4,6 +4,7 @@
 // camel-k: dependency=mvn:org.apache.cxf:cxf-rt-ws-security:3.3.6.fuse-jdk11-800019-redhat-00001
 // camel-k: dependency=mvn:org.apache.wss4j:wss4j-ws-security-common:2.2.2
 // camel-k: source=customizers/WSSecurityCustomizer.java
+// camel-k: secret=secret-saas
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,10 +53,10 @@ public class SalesforceToWorkday extends RouteBuilder {
         + "&updateTopic=true&rawPayload=true&sObjectQuery=SELECT " + ACCOUNT_FIELDS + " FROM Account")
 
             .unmarshal().json(JsonLibrary.Jackson).setHeader(SalesforceEndpointConfig.SOBJECT_ID, simple("${body[Id]}"))
-            .log("New Account ${headers." + SalesforceEndpointConfig.SOBJECT_ID + "}").bean(this, "toWorkdayRequest")
+            .log("New Account created: ID: ${headers." + SalesforceEndpointConfig.SOBJECT_ID + "}, Name: ${body[Name]}, Phone: ${body[Phone]}, Website: ${body[Website]}").bean(this, "toWorkdayRequest")
 
             // replace the address with a real Workday URL when not using the mock service
-            .to("cxf:http://localhost:8080/services/workday?dataFormat=PAYLOAD"
+            .to("cxf:http://localhost:8081/services/workday?dataFormat=PAYLOAD"
                 + "&defaultOperationName=Put_Customer_Request&defaultOperationNamespace=" + WORKDAY_WSDL_NS
                 + "&loggingFeatureEnabled=true&loggingSizeLimit=10000"
                 + "&cxfConfigurer=#wssecClientConfigurer&wsdlURL=" + WORKDAY_WSDL)
@@ -71,7 +72,7 @@ public class SalesforceToWorkday extends RouteBuilder {
 
     // Mock Workday Server route
     // NOTE: comment this route when using a real Workday instance
-    from("cxf:cxf?address=http://0.0.0.0:8080/services/workday"
+    from("cxf:cxf?address=http://0.0.0.0:8081/services/workday"
         + "&cxfConfigurer=#wssecServerConfigurer&dataFormat=PAYLOAD&wsdlURL=" + WORKDAY_WSDL).bean(this,
             "toWorkdayResponse");
   }
