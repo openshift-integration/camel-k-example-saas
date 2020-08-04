@@ -121,7 +121,7 @@ oc create secret generic mock-secret-saas --from-file=mock-secret-saas.propertie
 
 The mock Workday integration creates a Workday SOAP service for the [Revenue Management WSDL Put Customer Request](https://community.workday.com/sites/default/files/file-hosting/productionapi/Revenue_Management/v34.2/Put_Customer_Request.html) operation that generates a random UUID Workday `Customer_Request_Reference ID`. 
 
-The integration is contained in the file `MockWorkday.java` ([open](didact://?commandId=vscode.openFolder&projectFilePath=MockWorkday.java&completion=Opened%20the%20MockWorkday.java%20file "Opens the MockWorkday.java file"){.didact}).
+The integration is contained in the file [MockWorkday.java](didact://?commandId=vscode.openFolder&projectFilePath=MockWorkday.java&completion=Opened%20the%20MockWorkday.java%20file "Opens the MockWorkday.java file"){.didact}.
 
 > **NOTE:** The `MockWorkday.java` file contains a simple integration that uses the `cxf` component.
 > Dependency management is automatically handled by Camel K that imports all required libraries from the Camel

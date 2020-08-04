@@ -20,6 +20,7 @@ public class MockWorkday extends RouteBuilder {
 
     from("cxf:cxf?address=http://0.0.0.0:8080/services/workday"
         + "&cxfConfigurer=#wssecServerConfigurer&dataFormat=PAYLOAD&wsdlURL=" + WORKDAY_WSDL)
+        .log("Received Workday request: ${body}")
         .bean(UUID.class, "randomUUID")
         .setBody(simple("<wd:Put_Customer_Request_Response xmlns:wd=\"urn:com.workday/bsvc\"><wd:Customer_Request_Reference><wd:ID>${body.toString()}</wd:ID></wd:Customer_Request_Reference></wd:Put_Customer_Request_Response>"));
   }
