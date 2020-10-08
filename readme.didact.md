@@ -127,8 +127,6 @@ The integration is all contained in a single file named `SalesforceToServiceNow.
 > **Note:** the `SalesforceToServiceNow.java` file contains a simple integration that uses the `salesforce` and `servicenow` components.
 > Dependency management is automatically handled by Camel K that imports all required libraries from the Camel
 > catalog via code inspection. This means you can use all 300+ Camel components directly in your routes.
-> But for the ServiceNow connection, some external CXF runtime and WS-Security dependencies are required. 
-> These are easily added using the `-d` parameter of the ``kamel run` command. 
 
 We're ready to run the integration on our `camel-saas` project in the cluster.
 
