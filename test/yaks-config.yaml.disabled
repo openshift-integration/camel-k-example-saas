@@ -8,7 +8,7 @@ pre:
   run: |
     oc create secret generic secret-saas --from-file=../secret-saas.properties -n ${YAKS_NAMESPACE}
     kamel install -w -n ${YAKS_NAMESPACE}
-    kamel run ../SalesforceToWorkday.java -t container.probes-enabled=true -n ${YAKS_NAMESPACE}
+    kamel run ../SalesforceToServiceNow.java -t container.probes-enabled=true -n ${YAKS_NAMESPACE}
 post:
 - name: cleanup
   run: |
