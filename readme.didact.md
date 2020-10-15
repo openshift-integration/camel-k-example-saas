@@ -109,9 +109,9 @@ You can now proceed to the next section.
 
 This repository contains a Camel K integration that subscribes to new Salesforce Case creation notifications and maps the event data to create a new Incident in ServiceNow. It also adds the new ServiceNow Incident `Number` as the `Engineering Req Number` field in the Salesforce Case. 
 
-### 2.1. Creating a Kubernetes Secret from Salesforce and ServiceNow credentials
+### 2.1. Creating an OpenShift secret from Salesforce and ServiceNow credentials
 
-This repository contains a simple [secret-saas.properties](didact://?commandId=vscode.openFolder&projectFilePath=secret-saas.properties&completion=Opened%20the%secret-saas.properties%20file "Opens the secret-saas.properties file"){.didact} that can be used to generate a Kubernetes Secret with the Salesforce and ServiceNow credentials. 
+This repository contains a simple [secret-saas.properties](didact://?commandId=vscode.openFolder&projectFilePath=secret-saas.properties&completion=Opened%20the%secret-saas.properties%20file "Opens the secret-saas.properties file"){.didact} that can be used to generate a OpenShift secret with the Salesforce and ServiceNow credentials. 
 
 After property values have been added to `secret-saas.properties`, create the secret using the command:
 
