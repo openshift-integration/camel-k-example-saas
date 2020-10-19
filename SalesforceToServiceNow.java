@@ -17,38 +17,45 @@ public class SalesforceToServiceNow extends RouteBuilder {
   @Override
   public void configure() throws Exception {
 
+    // main route
     from("salesforce:CamelCaseTopic?"
         + "notifyForOperationCreate=true&notifyForOperationUpdate=true&notifyForOperationDelete=false&notifyForOperationUndelete=false"
         + "&updateTopic=true&rawPayload=true&sObjectQuery=SELECT Id, CaseNumber FROM Case")
 
-            .unmarshal().json(JsonLibrary.Jackson)
-            // save Salesforce object ID in header for to("salesforce:updateSObject")
-            .setHeader(SalesforceEndpointConfig.SOBJECT_ID, simple("${body[Id]}"))
-            // lookup fields for new Case sobject
-            .to("salesforce:getSObject?rawPayload=true&sObjectName=Case&sObjectFields=" + SOBJECT_FIELDS)
-            .unmarshal().json(JsonLibrary.Jackson)
-            .log("New Case created: ID: ${body[Id]}, Account.Name: ${body[Account][Name]}, CaseNumber: ${body[CaseNumber]}, Subject: ${body[Subject]}")
+            .to("direct:enrichCase")
+            .to("direct:mapCaseToIncident")
+            .to("direct:createIncident")
+            .to("direct:mapIncidentToCase")
+            .to("direct:updateCase");
 
-            // create servicenow request json
-            .setBody(simple("{\"correlation_id\": \"${body[Id]}\", " +
-              "\"short_description\": \"${body[Subject]}\", " +
-              "\"description\": \"Salesforce Case [${body[CaseNumber]}] for Account [${body[Account][Name]}] : ${body[Description]}\"}"))
+    // sub-routes
 
-            // create new ServiceNow incident
-            .setHeader(ServiceNowConstants.ACTION, constant(ServiceNowConstants.ACTION_CREATE))
-            .to("servicenow:{{camel.component.servicenow.instanceName}}?resource=table&table=incident&model.incident=java.lang.String")
-            .unmarshal().json(JsonLibrary.Jackson)
+    from("direct:enrichCase")
+        .unmarshal().json(JsonLibrary.Jackson)
+        .setHeader(SalesforceEndpointConfig.SOBJECT_ID, simple("${body[Id]}"))
+        .to("salesforce:getSObject?rawPayload=true&sObjectName=Case&sObjectFields=" + SOBJECT_FIELDS)
+        .unmarshal().json(JsonLibrary.Jackson)
+        .log("New Case: ID: ${body[Id]}, Account.Name: ${body[Account][Name]}, CaseNumber: ${body[CaseNumber]}, Subject: ${body[Subject]}");
 
-            // save sys_id to header `incidentNumber`
-            .setHeader("incidentNumber", simple("${body[number]}")) 
-            .log("Created Incident with number ${headers.incidentNumber}")
+    from("direct:mapCaseToIncident")
+        .setBody(simple("{\"correlation_id\": \"${body[Id]}\", "
+          + "\"short_description\": \"${body[Subject]}\", "
+          + "\"description\": \"Salesforce Case [${body[CaseNumber]}] for Account [${body[Account][Name]}] : ${body[Description]}\"}"));
 
-            // create Salesforce request json
-            .setBody(simple("{\"EngineeringReqNumber__c\": \"${headers.incidentNumber}\"}")) 
+    from("direct:createIncident")
+        .setHeader(ServiceNowConstants.ACTION, constant(ServiceNowConstants.ACTION_CREATE))
+        .to("servicenow:{{camel.component.servicenow.instanceName}}?resource=table&table=incident&model.incident=java.lang.String")
+        .unmarshal().json(JsonLibrary.Jackson)
+        .setHeader("incidentNumber", simple("${body[number]}"))
+        .log("Created Incident with number ${headers.incidentNumber}");
 
-            // update Salesforce Case
-            .to("salesforce:updateSObject?sObjectName=Case")
-            .log("Updated Case with Incident number ${headers.incidentNumber}");
-  }
+    from("direct:mapIncidentToCase")
+        .setBody(simple("{\"EngineeringReqNumber__c\": \"${headers.incidentNumber}\"}"));
+
+    from("direct:updateCase")
+        .to("salesforce:updateSObject?sObjectName=Case")
+        .log("Updated Case with Incident number ${headers.incidentNumber}");
+
+  };
 
 }

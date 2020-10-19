@@ -111,7 +111,7 @@ This repository contains a Camel K integration that subscribes to new Salesforce
 
 ### 2.1. Creating an OpenShift secret from Salesforce and ServiceNow credentials
 
-This repository contains a simple [secret-saas.properties](didact://?commandId=vscode.openFolder&projectFilePath=secret-saas.properties&completion=Opened%20the%secret-saas.properties%20file "Opens the secret-saas.properties file"){.didact} that can be used to generate a OpenShift secret with the Salesforce and ServiceNow credentials. 
+This repository contains a simple [secret-saas.properties](didact://?commandId=vscode.openFolder&projectFilePath=secret-saas.properties&completion=Opened%20the%secret-saas.properties%20file "Opens the secret-saas.properties file"){.didact} that can be used to generate an OpenShift secret with the Salesforce and ServiceNow credentials. 
 
 After property values have been added to `secret-saas.properties`, create the secret using the command:
 
