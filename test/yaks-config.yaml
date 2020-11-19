@@ -2,15 +2,9 @@ config:
   namespace:
     temporary: true
 pre:
-- name: SalesforceLogin
-  script: salesforceLogin.sh
 - name: Run the integration
   run: |
     oc create secret generic secret-saas --from-file=../secret-saas.properties -n ${YAKS_NAMESPACE}
+    oc label secret secret-saas yaks.citrusframework.org/test=integration -n ${YAKS_NAMESPACE}
     kamel install -w -n ${YAKS_NAMESPACE}
     kamel run ../SalesforceToServiceNow.java -t container.probes-enabled=true -n ${YAKS_NAMESPACE}
-post:
-- name: cleanup
-  run: |
-    rm integration.feature 
-    mv integration.feature.backup integration.feature
