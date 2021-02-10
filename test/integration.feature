@@ -24,7 +24,7 @@ Feature: integration prints expected messages
     And HTTP request header Content-Type="application/json"
     And HTTP request body: {  "Subject" : "${subject}", "AccountId": "${account_id}", "Description" : "${description}" }
 
-  Scenario:
+  Scenario: Integration consumes newly created Salesforce object
     Given Camel-K integration salesforce-to-service-now is running
     When send POST /services/data/v20.0/sobjects/Case
     Then receive HTTP 201 Created
