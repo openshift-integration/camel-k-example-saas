@@ -1,6 +1,6 @@
 # Camel K SaaS Example
  
-This example demonstrates how to use Camel K to integrate Salesforce and ServiceNow, two popular SaaS providers. It requires Salesforce and ServiceNow login credentials to run the demo. It demonstrates a simple scenario where every new Salesforce Case must be copied to ServiceNow as an Incident and it's Incident Number cross-refrerenced back into Salesforce Case. 
+This example demonstrates how to use Camel K to integrate Salesforce and ServiceNow, two popular SaaS providers. It requires Salesforce and ServiceNow login credentials to run the demo. It demonstrates a simple scenario where every new Salesforce Case must be copied to ServiceNow as an Incident and it's Incident Number cross-referenced back into Salesforce Case. 
 
 ## Before you begin
 
