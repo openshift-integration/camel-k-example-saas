@@ -1,6 +1,5 @@
 // camel-k: language=java
-// camel-k: profile=openshift
-// camel-k: secret=secret-saas
+// camel-k: config=secret:secret-saas
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.salesforce.SalesforceEndpointConfig;
