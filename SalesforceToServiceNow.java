@@ -1,6 +1,7 @@
 // camel-k: language=java
 // camel-k: config=secret:secret-saas
 // camel-k: dependency=camel:servicenow
+// camel-k: dependency=mvn:javax.ws.rs:javax.ws.rs-api:2.1
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.salesforce.SalesforceEndpointConfig;
