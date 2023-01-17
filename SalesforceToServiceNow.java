@@ -12,9 +12,6 @@ public class SalesforceToServiceNow extends RouteBuilder {
 
   private static final String SOBJECT_FIELDS = "Id,Account.Name,CaseNumber,Subject,Description";
 
-  SalesforceToServiceNow() throws Exception {
-  }
-
   @Override
   public void configure() throws Exception {
 
