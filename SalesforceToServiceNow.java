@@ -16,7 +16,7 @@ public class SalesforceToServiceNow extends RouteBuilder {
   public void configure() throws Exception {
 
     // main route
-    from("salesforce:CamelCaseTopic?"
+    from("salesforce:subscribe:CamelCaseTopic?"
         + "notifyForOperationCreate=true&notifyForOperationUpdate=true&notifyForOperationDelete=false&notifyForOperationUndelete=false"
         + "&updateTopic=true&rawPayload=true&sObjectQuery=SELECT Id, CaseNumber FROM Case")
 
