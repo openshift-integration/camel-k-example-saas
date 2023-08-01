@@ -100,8 +100,9 @@ Use the following command to run it in "dev mode", in order to see the logs in t
 kamel run SalesforceToServiceNow.java --dev
 ```
 
-If everything is ok, after the build phase finishes, you should see the Camel integration running. When a new Salesforce Case is created, the integration will print "New Case <salesforce-id>" in the terminal window. After creating a ServiceNow Incident Request it will print "Created Incident with number <servicenow-incident-number>". It will then update the Salesforce Case and print "Updated Case with Incident number <servicenow-incident-number>". 
+If everything is ok, after the build phase finishes, you should see the Camel integration running.
 
+Create a new Salesforce Case. Integration will print "New Case {salesforce-id}" in the terminal window. After creating a ServiceNow Incident Request it will print "Created Incident with number {servicenow-incident-number}". It will then update the Salesforce Case and print "Updated Case with Incident number {servicenow-incident-number}".
 When running in dev mode, you can change the integration code and let Camel K redeploy the changes automatically.
 
 To try this feature, open the `SalesforceToServiceNow.java` file and change "New Case" to "Holy new Case Batman", then save the file.
