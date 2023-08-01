@@ -135,7 +135,9 @@ kamel run SalesforceToServiceNow.java --dev
 ```
 ([^ execute](didact://?commandId=vscode.didact.sendNamedTerminalAString&text=camelTerm$$kamel%20run%20SalesforceToServiceNow.java%20--dev&completion=Camel%20K%20saas%20integration%20run%20in%20dev%20mode. "Opens a new terminal and sends the command above"){.didact})
 
-If everything is ok, after the build phase finishes, you should see the Camel integration running. When a new Salesforce Case is created, the integration will print "New Case <salesforce-id>" in the terminal window. After creating a ServiceNow Incident Request it will print "Created Incident with number <servicenow-incident-number>". It will then update the Salesforce Case and print "Updated Case with Incident number <servicenow-incident-number>". 
+If everything is ok, after the build phase finishes, you should see the Camel integration running.
+
+Create a new Salesforce Case. Integration will print "New Case {salesforce-id}" in the terminal window. After creating a ServiceNow Incident Request it will print "Created Incident with number {servicenow-incident-number}". It will then update the Salesforce Case and print "Updated Case with Incident number {servicenow-incident-number}". 
 
 When running in dev mode, you can change the integration code and let Camel K redeploy the changes automatically.
 
